@@ -1,0 +1,75 @@
+@using System;
+@using System.Collections.Generic;
+@using weddingplanner.Models;
+@model List<Wedding>;
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Hello!</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/style.css"/>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h1 style="display:inline-block;">Welcome to the Wedding Planner</h1>
+                <a href="/Logout">Log Out</a>
+            </div>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Wedding</th>
+                        <th>Date</th>
+                        <th>Guest</th>
+                        <th>Creator Id</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach(var x in @Model)
+                    {
+                        <tr>
+                            <td><a href="/ShowWeddingDetail/@x.WeddingId">@x.WedderOne & @x.WedderTwo</a></td>
+                            <td>@x.Date</td>
+                            <td>@x.Attendees.Count</td>
+                            <td>@x.CreatorId</td>
+                            <td>
+                            @if(ViewBag.CurrentUser == @x.CreatorId)
+                            {
+                                <a href="/DeleteWedding/@x.WeddingId" class="btn btn-primary">Delete</a>
+                            }
+                            @{
+                                var count = 0;
+                                foreach (var guest in @x.Attendees)
+                                {
+                                    if(@ViewBag.CurrentUser == guest.UserId)
+                                    {
+                                        count++;
+                                    }
+                                }
+                                if(count == 0)
+                                {
+                                    <a href="/AddRsvp/@x.WeddingId" class="btn btn-primary">RSVP</a>
+                                }
+                                else
+                                {
+                                    <a href="/AddRsvp/@x.WeddingId" class="btn btn-primary">Un-Rsvp</a>
+                                }
+                            }
+                            </td>
+                        </tr>
+                    }    
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="margin-top:2%;"> 
+                <a href="/Addwedding" class="btn btn-primary">New Wedding</a>
+            </div>
+
+        </div>
+    </body>
+</html>

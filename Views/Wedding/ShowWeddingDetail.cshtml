@@ -1,0 +1,40 @@
+
+@model weddingplanner.Models.Wedding;
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Hello!</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/style.css"/>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <h1>@Model.WedderOne and @Model.WedderTwo</h1>
+                </div>
+                <div class="col-sm-2">
+                    <a href="/Dashboard">Dashboard</a>
+                </div>
+                <div class="col-sm-1">
+                    <a href="/Logout">Log Out</a>
+                </div>
+            </div>
+            <div class="row">
+                <h2>Date: @Model.Date</h2>
+            </div>
+            <div class="row">
+                <H2>Guests: </H2>
+            </div>
+            @foreach(var x in Model.Attendees)
+            {
+                <div class="row">
+                    <span>@x.user.FirstName @x.user.LastName </span>
+                </div>
+            }
+        </div>
+    </body>
+</html>
